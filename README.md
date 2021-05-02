@@ -8,6 +8,7 @@ To use the code, go to your _terminal_ or _command prompt_ and ensure you have M
 ## Graph examples
 ### Line graph:  
 <img src="graphs/20210501T190127-line.png" width=50%>  
+
 ### Bar chart:
 <img src="graphs/20210425T180819-bar.png" width=50%>  
    
