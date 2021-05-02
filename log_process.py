@@ -139,7 +139,7 @@ def main():
         interval_to_log_activity = get_log_activity_interval(log_path)
         for key, value in interval_to_log_activity.items():
             print(key, ":", value)
-        draw_bar_plot_from_time_dict(interval_to_log_activity, view=False, save_file=identifying_folder)
+        draw_line_plot_from_time_dict(interval_to_log_activity, view=False, save_file=identifying_folder)
     
 
 if __name__ == "__main__":
