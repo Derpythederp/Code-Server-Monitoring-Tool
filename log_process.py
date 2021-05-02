@@ -8,6 +8,7 @@ import argparse
 
 CODE_SERVER_LOG_PATH = os.path.expanduser("~") + "/.local/share/code-server/logs"
 LOG_TIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
+GRAPH_OUTPUT_DIRECTORY = os.path.join(os.path.dirname(os.path.abspath(__file__)), "graphs")
 plt.style.use('seaborn')
 
 
@@ -101,7 +102,7 @@ def draw_bar_plot_from_time_dict(interval_to_log_activity, view=True, skip=2, ax
         fig.show()
     
     if save_file is not None:
-        fig.savefig(save_file + "-bar", dpi=dpi)
+        fig.savefig(os.path.join(GRAPH_OUTPUT_DIRECTORY, save_file + "-bar"), dpi=dpi)
 
 
 def draw_line_plot_from_time_dict(interval_to_log_activity, view=True, save_file=None, dpi=200):
@@ -126,12 +127,14 @@ def draw_line_plot_from_time_dict(interval_to_log_activity, view=True, save_file
         plt.show()
     
     if save_file is not None:
-        plt.savefig(save_file + "-line", dpi=dpi)
+        plt.savefig(os.path.join(GRAPH_OUTPUT_DIRECTORY, save_file + "-line"), dpi=dpi)
     
     plt.close()
 
 
 def main():
+    if not os.path.exists(GRAPH_OUTPUT_DIRECTORY):
+        os.mkdir(GRAPH_OUTPUT_DIRECTORY)
     log_paths = get_exthost_log_paths()
     for log_path in log_paths:
         identifying_folder = pathlib.Path(log_path).parent.parent.name  # the grandparent of exthost.log is unique per day
@@ -139,7 +142,7 @@ def main():
         interval_to_log_activity = get_log_activity_interval(log_path)
         for key, value in interval_to_log_activity.items():
             print(key, ":", value)
-        draw_line_plot_from_time_dict(interval_to_log_activity, view=False, save_file=identifying_folder)
+        draw_bar_plot_from_time_dict(interval_to_log_activity, view=False, save_file=identifying_folder)
     
 
 if __name__ == "__main__":
